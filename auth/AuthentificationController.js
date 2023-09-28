@@ -29,7 +29,7 @@ const Login = async (req, res) => {
     return res.status(200).json({
       message: "Logged successfully",
       success: true,
-      data: user,
+      user: user,
       token,
       refreshToken,
     });
@@ -172,4 +172,5 @@ module.exports = {
   GetUserByToken,
   RefreshToken,
   ChangePassword,
+  ForgotPassword,
 };

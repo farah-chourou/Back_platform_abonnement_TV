@@ -15,7 +15,7 @@ const mongoose = require("mongoose");
 app.use(
   cors({
     origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
@@ -59,7 +59,7 @@ async function creatSuperAdmin() {
       console.log("SuperAdmincreated");
     }
   } catch (error) {
-    console.error(error);
+    return error;
   }
 }
 app.use("/", AllRoutes);

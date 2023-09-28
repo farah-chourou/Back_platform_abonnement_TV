@@ -11,4 +11,5 @@ router.put(
   verifToken.isAdmin,
   authController.ChangePassword
 );
+router.post("/forgot", verifToken.isAdmin, authController.ForgotPassword);
 module.exports = router;
