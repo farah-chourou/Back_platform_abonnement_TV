@@ -2,7 +2,7 @@ const express = require("express");
 const dynamicRouter = express.Router();
 const mongoose = require("mongoose");
 const verifToken = require("../middelwares/VerifToken");
-const validator = require("../utils/validator");
+const validator = require("../middelwares/validator");
 
 const { UserName } = require("../models/UserModel");
 const { ServicePaiementName } = require("../models/ServicePaiementModel");
