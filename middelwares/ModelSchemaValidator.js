@@ -20,7 +20,30 @@ const editModelSchema = Joi.object({
   note: Joi.string(),
 });
 
+const createAbonnSchema = Joi.object({
+  application: Joi.string(),
+  adresseMac: Joi.string().required(),
+  dateDebut: Joi.string(),
+  dateFin: Joi.string(),
+  periode: Joi.string(),
+  clientID: Joi.string(),
+  deviceID: Joi.string(),
+  typeAbonnID: Joi.string(),
+});
+const createDeviceSchema = Joi.object({
+  label: Joi.string().required(),
+});
+const createAbonnTypeSchema = Joi.object({
+  label: Joi.string().required(),
+});
+const createServicePaiSchema = Joi.object({
+  label: Joi.string().required(),
+});
+
 module.exports = {
   createModelSchema,
   editModelSchema,
+  createDeviceSchema,
+  createAbonnTypeSchema,
+  createServicePaiSchema,
 };

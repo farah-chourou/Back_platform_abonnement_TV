@@ -22,25 +22,32 @@ let models = [
 ];
 
 const middlewareFunctions = {
-  User: [],
-  Abonnement: [],
-  TypeAbon: [],
-  Client: [],
+  User: [verifToken.isUser],
+  Abonnement: [verifToken.isUser],
+  TypeAbon: [verifToken.isSuperAdmin],
+  Client: [verifToken.isUser],
+  Device: [verifToken.isSuperAdmin],
+  ServicePaiement: [verifToken.isSuperAdmin],
 };
 const middlewareFunctionsPost = {
-  User: [],
-  Partnership: [],
-  Service: [],
-  Category: [verifToken.isUser],
-  Client: [validator.validateClientAdd],
+  User: [verifToken.isUser],
+  Client: [verifToken.isSuperAdmin, validator.validateClientAdd],
+  Abonnement: [verifToken.isUser],
+  ServicePaiement: [
+    verifToken.isSuperAdmin,
+    validator.validateServicePaiementAdd,
+  ],
+  Device: [verifToken.isSuperAdmin, validator.validateDeviceAdd],
+  TypeAbon: [verifToken.isSuperAdmin, validator.validateAbonnTypeAdd],
 };
 
 const middlewareFunctionsPut = {
-  User: [],
-  Partnership: [],
-  Service: [],
-  Category: [verifToken.isUser],
-  Client: [validator.validateClientEdit],
+  User: [verifToken.isUser],
+  ServicePaiement: [verifToken.isSuperAdmin],
+  Device: [verifToken.isSuperAdmin],
+  TypeAbon: [verifToken.isSuperAdmin],
+  Client: [verifToken.isSuperAdmin, validator.validateClientEdit],
+  Abonnement: [verifToken.isUser],
 };
 
 models.forEach((modelName) => {
@@ -68,11 +75,11 @@ models.forEach((modelName) => {
   // Read
   dynamicRouter.get(`/${modelName}/getAll`, middlewares, async (req, res) => {
     try {
-      models = await Model.find({});
+      models = await Model.find({}).sort({ createdAt: -1 });
 
       return res
         .status(200)
-        .json({ Message: "data found successfully ", data: models });
+        .json({ Message: "Data found successfully", data: models });
     } catch (error) {
       res.status(500).send(error);
     }
@@ -124,19 +131,23 @@ models.forEach((modelName) => {
   );
 
   // Delete
-  dynamicRouter.delete(`/${modelName}/delete/:id`, async (req, res) => {
-    try {
-      const model = await Model.findByIdAndDelete(req.params.id);
-      if (!model) {
-        return res.status(404).send();
+  dynamicRouter.delete(
+    `/${modelName}/delete/:id`,
+    middlewares,
+    async (req, res) => {
+      try {
+        const model = await Model.findByIdAndDelete(req.params.id);
+        if (!model) {
+          return res.status(404).send();
+        }
+        return res
+          .status(200)
+          .json({ Message: "data deleted successfully ", data: model });
+      } catch (error) {
+        res.status(500).send(error);
       }
-      return res
-        .status(200)
-        .json({ Message: "data deleted successfully ", data: model });
-    } catch (error) {
-      res.status(500).send(error);
     }
-  });
+  );
 });
 
 module.exports = dynamicRouter;

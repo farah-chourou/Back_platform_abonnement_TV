@@ -19,6 +19,4 @@ const Mail_Sender = async (email, content, subject = "Auth") => {
   return result;
 };
 
-module.exports = {
-  Mail_Sender,
-};
+module.exports = Mail_Sender;

@@ -45,7 +45,7 @@ async function creatSuperAdmin() {
     });
 
     if (!existingUser) {
-      const mdp = "58217520";
+      const mdp = "27893558";
       const mdpCrypted = await bcrypt.hash(mdp, Number(process.env.SALT));
       const newUser = new userModel({
         email: "chouroufarah@gmail.com",
@@ -62,5 +62,30 @@ async function creatSuperAdmin() {
     return error;
   }
 }
+async function creatAdmin() {
+  try {
+    const existingUser = await userModel.findOne({
+      role: "ADMIN",
+    });
+
+    if (!existingUser) {
+      const mdp = "123456";
+      const mdpCrypted = await bcrypt.hash(mdp, Number(process.env.SALT));
+      const newUser = new userModel({
+        email: "chouroufarah1@gmail.com",
+        nom: "farah",
+        prenom: "chourou",
+        role: "ADMIN",
+        password: mdpCrypted,
+      });
+
+      await newUser.save();
+      console.log("SuperAdmincreated");
+    }
+  } catch (error) {
+    return error;
+  }
+}
 app.use("/", AllRoutes);
 creatSuperAdmin();
+creatAdmin();

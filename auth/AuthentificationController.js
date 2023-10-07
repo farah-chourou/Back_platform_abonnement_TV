@@ -1,6 +1,9 @@
 const GenereteToken = require("../functions/GenerateToken");
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/UserModel");
+const GeneratePassword = require("../functions/GeneratePassword");
+const Mail_Sender = require("../functions/MailSneder");
+
 const jwt = require("jsonwebtoken");
 
 const Login = async (req, res) => {
@@ -118,6 +121,7 @@ const ChangePassword = async (req, res) => {
 const ForgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
+    console.log(req.body);
 
     const existUser = await UserModel.findOne({ email });
 
@@ -152,12 +156,11 @@ const ForgotPassword = async (req, res) => {
     let subject = "Password Recover";
     let content = `
             <div>
-            <h2>Welcome ${existUser.nom} ${existUser.prenom} to our plateforme</h2>
+            <h2>Hello ${existUser.nom} ${existUser.prenom},</h2>
             <p>we recieved a request to recover your password</p>
             <p>your new password is : <b>${password}</b> </p>
-            <p>please make sure to change your password after you access to your account</p>
             </div>`;
-    await Mailer.Mail_Sender(existUser.email, content, subject);
+    await Mail_Sender(existUser.email, content, subject);
 
     return res
       .status(200)
