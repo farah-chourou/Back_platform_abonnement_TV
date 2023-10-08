@@ -86,6 +86,9 @@ async function creatAdmin() {
     return error;
   }
 }
-app.use("/", AllRoutes);
+app.get("/", (req, res) => {
+  res.send("hello hotel");
+  console.log("Hello hotel");
+});
 creatSuperAdmin();
 creatAdmin();
