@@ -14,7 +14,7 @@ const mongoose = require("mongoose");
 
 app.use(
   cors({
-    origin: "http://front-platform-abonnement-tv.vercel.app",
+    origin: process.env.FRONTEND_ORIGIN || "http://localhost:3000",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -24,7 +24,10 @@ const port = process.env.PORT || 5000;
 
 const server = http.createServer(app);
 
-connectDB();
+server.listen(port, () => {
+  console.log(`Listening on port ${port}...`);
+  connectDB();
+});
 
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(
