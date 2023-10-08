@@ -14,7 +14,7 @@ const mongoose = require("mongoose");
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://front-platform-abonnement-tv.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
