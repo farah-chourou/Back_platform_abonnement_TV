@@ -3,8 +3,8 @@ const bodyParser = require("body-parser");
 const http = require("http");
 const app = express();
 const cors = require("cors");
-const bcrypt = require("bcrypt");
-
+/* const bcrypt = require("bcrypt");
+ */
 require("dotenv").config();
 const connectDB = require("./database/connectionDB");
 const AllRoutes = require("./routes/AllRoutes");
@@ -44,7 +44,7 @@ app.use(
   })
 );
 
-async function creatSuperAdmin() {
+/* async function creatSuperAdmin() {
   try {
     const existingUser = await userModel.findOne({
       role: "SUPERADMIN",
@@ -91,7 +91,7 @@ async function creatAdmin() {
   } catch (error) {
     return error;
   }
-}
+} */
 app.use("/", AllRoutes);
-creatSuperAdmin();
-creatAdmin();
+/* creatSuperAdmin();
+creatAdmin(); */
