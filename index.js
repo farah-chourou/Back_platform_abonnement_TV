@@ -3,8 +3,8 @@ const bodyParser = require("body-parser");
 const http = require("http");
 const app = express();
 const cors = require("cors");
-/* const bcrypt = require("bcrypt");
- */
+const bcrypt = require("bcrypt");
+
 require("dotenv").config();
 const connectDB = require("./database/connectionDB");
 const AllRoutes = require("./routes/AllRoutes");
@@ -12,20 +12,20 @@ const userModel = require("./models/UserModel");
 
 const mongoose = require("mongoose");
 
-/* app.use(
+app.use(
   cors({
     origin: process.env.FRONTEND_ORIGIN || "http://localhost:3000",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
-); */
-const corsConfig = {
+);
+/* const corsConfig = {
   origin: process.env.FRONTEND_ORIGIN || "http://localhost:3000",
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 };
 app.use(cors(corsConfig));
-app.options("", cors(corsConfig));
+app.options("", cors(corsConfig)); */
 const port = process.env.PORT || 5000;
 
 const server = http.createServer(app);
@@ -44,7 +44,7 @@ app.use(
   })
 );
 
-/* async function creatSuperAdmin() {
+async function creatSuperAdmin() {
   try {
     const existingUser = await userModel.findOne({
       role: "SUPERADMIN",
@@ -91,7 +91,7 @@ async function creatAdmin() {
   } catch (error) {
     return error;
   }
-} */
+}
 app.use("/", AllRoutes);
-/* creatSuperAdmin();
-creatAdmin(); */
+creatSuperAdmin();
+creatAdmin();
