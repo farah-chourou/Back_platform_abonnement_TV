@@ -24,10 +24,7 @@ const port = process.env.PORT || 5000;
 
 const server = http.createServer(app);
 
-server.listen(port, () => {
-  console.log(`Listening on port ${port}...`);
-  connectDB();
-});
+connectDB();
 
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(
