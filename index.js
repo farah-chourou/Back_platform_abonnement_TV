@@ -12,14 +12,20 @@ const userModel = require("./models/UserModel");
 
 const mongoose = require("mongoose");
 
-app.use(
+/* app.use(
   cors({
     origin: process.env.FRONTEND_ORIGIN || "http://localhost:3000",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
-);
-
+); */
+const corsConfig = {
+  origin: process.env.FRONTEND_ORIGIN || "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+};
+app.use(cors(corsConfig));
+app.options("", cors(corsConfig));
 const port = process.env.PORT || 5000;
 
 const server = http.createServer(app);
@@ -86,9 +92,6 @@ async function creatAdmin() {
     return error;
   }
 }
-app.get("/", (req, res) => {
-  res.send("hello hotel");
-  console.log("Hello hotel");
-});
+app.use("/", AllRoutes);
 creatSuperAdmin();
 creatAdmin();
