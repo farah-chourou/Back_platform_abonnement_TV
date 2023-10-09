@@ -3,7 +3,8 @@ const { addMonths } = require("date-fns");
 
 const AddAbonnement = async (req, res) => {
   try {
-    const { email, application } = req.body;
+    const { application } = req.body;
+    console.log(req.body);
     const existAbonn = await AbonnementModel.findOne({ application });
     if (existAbonn)
       return res.status(409).json({
@@ -14,12 +15,21 @@ const AddAbonnement = async (req, res) => {
     const date_1 = new Date(req.body.dateDebut);
     const periode = req.body.periode;
     const date_2 = addMonths(date_1, periode);
+    var newAbonn;
 
-    const newAbonn = new AbonnementModel({
-      ...req.body,
-      files: req.files.Documentation[0].path,
-      dateFin: date_2,
-    });
+    if (req.files.length > 0) {
+      newAbonn = new AbonnementModel({
+        ...req.body,
+        files: req.files.Documentation[0].path,
+        dateFin: date_2,
+      });
+    } else {
+      newAbonn = new AbonnementModel({
+        ...req.body,
+        dateFin: date_2,
+      });
+    }
+
     const createdAbonn = await newAbonn.save();
 
     return res.status(200).json({

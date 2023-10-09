@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 const AbonnementModel = new Schema(
   {
     application: { type: String, required: true },
-    adresseMac: { type: String, required: true },
-    dateDebut: { type: String, required: false, unique: true },
-    dateFin: { type: String, required: true },
+    adresseMac: { type: String, required: false },
+    dateDebut: { type: String, required: true },
+    dateFin: { type: String, required: false },
     periode: { type: String, required: true },
     files: [{ type: String, required: false }],
     clientID: { type: mongoose.Schema.Types.ObjectId, ref: "Client" },

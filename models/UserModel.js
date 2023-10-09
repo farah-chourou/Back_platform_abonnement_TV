@@ -4,8 +4,7 @@ const Schema = mongoose.Schema;
 
 const UserModel = new Schema(
   {
-    nom: { type: String, required: true },
-    prenom: { type: String, required: true },
+    fullName: { type: String, required: true },
     email: { type: String, required: false, unique: true },
     password: { type: String, required: true },
     role: {

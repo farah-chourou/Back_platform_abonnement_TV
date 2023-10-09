@@ -3,11 +3,9 @@ const Schema = mongoose.Schema;
 
 const ClientModel = new Schema(
   {
-    nom: { type: String, required: true },
-    prenom: { type: String, required: true },
+    fullName: { type: String, required: true },
     email: { type: String, required: false, unique: true },
     pays: { type: String, required: true },
-    envoie: { type: String, required: true },
     numTelephone: { type: Number, required: false },
     note: { type: String, required: false },
   },
