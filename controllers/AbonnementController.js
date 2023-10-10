@@ -16,8 +16,7 @@ const AddAbonnement = async (req, res) => {
     const periode = req.body.periode;
     const date_2 = addMonths(date_1, periode);
     var newAbonn;
-
-    if (req.files.length > 0) {
+    if (req.files.Documentation.length > 0) {
       newAbonn = new AbonnementModel({
         ...req.body,
         files: req.files.Documentation[0].path,
