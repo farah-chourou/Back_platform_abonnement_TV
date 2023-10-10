@@ -10,6 +10,7 @@ const { DeviceName } = require("../models/DeviceModel");
 const { ClientName } = require("../models/ClientModel");
 const { TypeAbonName } = require("../models/AbonnementTypeModel");
 const { AbonnementName } = require("../models/AbonnementModel");
+const AbonnementModel = require("../models/AbonnementModel");
 // const uploadImageToCloudinary = require("../middelwares/imageMiddleware");
 
 let models = [
@@ -27,16 +28,13 @@ const middlewareFunctions = {
   TypeAbon: [verifToken.isSuperAdmin],
   Client: [verifToken.isUser],
   Device: [verifToken.isSuperAdmin],
-  ServicePaiement: [verifToken.isSuperAdmin],
+  ServicePaiement: [verifToken.isUser],
 };
 const middlewareFunctionsPost = {
   User: [verifToken.isUser],
   Client: [verifToken.isSuperAdmin, validator.validateClientAdd],
   Abonnement: [verifToken.isUser],
-  ServicePaiement: [
-    verifToken.isSuperAdmin,
-    validator.validateServicePaiementAdd,
-  ],
+  ServicePaiement: [verifToken.isUser, validator.validateServicePaiementAdd],
   Device: [verifToken.isSuperAdmin, validator.validateDeviceAdd],
   TypeAbon: [verifToken.isSuperAdmin, validator.validateAbonnTypeAdd],
 };
@@ -136,6 +134,16 @@ models.forEach((modelName) => {
     middlewares,
     async (req, res) => {
       try {
+        if (modelName === "Client") {
+          const existAbonn = await AbonnementModel.findOne({
+            clientID: req.params.id,
+          });
+          if (existAbonn) {
+            return res
+              .status(400)
+              .json({ message: "Vous ne pouvez pas supprimer ce client " });
+          }
+        }
         const model = await Model.findByIdAndDelete(req.params.id);
         if (!model) {
           return res.status(404).send();

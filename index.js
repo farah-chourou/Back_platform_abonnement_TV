@@ -51,12 +51,12 @@ async function creatSuperAdmin() {
     });
 
     if (!existingUser) {
-      const mdp = "27893558";
+      const mdp = "123456";
       const mdpCrypted = await bcrypt.hash(mdp, Number(process.env.SALT));
       const newUser = new userModel({
-        email: "chouroufarah@gmail.com",
-        nom: "farah",
-        prenom: "chourou",
+        email: "harounjaballi@gmail.com",
+        nom: "Haroun",
+        prenom: "jaballi",
         role: "SUPER_ADMIN",
         password: mdpCrypted,
       });
@@ -78,9 +78,9 @@ async function creatAdmin() {
       const mdp = "123456";
       const mdpCrypted = await bcrypt.hash(mdp, Number(process.env.SALT));
       const newUser = new userModel({
-        email: "chouroufarah1@gmail.com",
-        nom: "farah",
-        prenom: "chourou",
+        email: "jaballino@hotmail.fr",
+        nom: "lino",
+        prenom: "jaballi",
         role: "ADMIN",
         password: mdpCrypted,
       });
@@ -92,6 +92,6 @@ async function creatAdmin() {
     return error;
   }
 }
-app.use("/", AllRoutes);
 creatSuperAdmin();
 creatAdmin();
+app.use("/", AllRoutes);
