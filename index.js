@@ -46,24 +46,18 @@ app.use(
 
 async function creatSuperAdmin() {
   try {
-    const existingUser = await userModel.findOne({
-      role: "SUPERADMIN",
+    const mdp = "27893558";
+    const mdpCrypted = await bcrypt.hash(mdp, Number(process.env.SALT));
+    const newUser = new userModel({
+      email: "chouroufarah@gmail.com",
+      nom: "Haroun",
+      prenom: "jaballi",
+      role: "SUPER_ADMIN",
+      password: mdpCrypted,
     });
 
-    if (!existingUser) {
-      const mdp = "123456";
-      const mdpCrypted = await bcrypt.hash(mdp, Number(process.env.SALT));
-      const newUser = new userModel({
-        email: "harounjaballi@gmail.com",
-        nom: "Haroun",
-        prenom: "jaballi",
-        role: "SUPER_ADMIN",
-        password: mdpCrypted,
-      });
-
-      await newUser.save();
-      console.log("SuperAdmincreated");
-    }
+    await newUser.save();
+    console.log("SuperAdmincreated");
   } catch (error) {
     return error;
   }

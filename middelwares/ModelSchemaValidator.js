@@ -2,18 +2,18 @@ const Joi = require("joi");
 
 const createModelSchema = Joi.object({
   fullName: Joi.string().required(),
-  email: Joi.string().email(),
+  email: Joi.string().email().allow(""),
   pays: Joi.string().required(),
   numTelephone: Joi.number(),
-  note: Joi.string(),
+  note: Joi.string().allow(""),
 });
 
 const editModelSchema = Joi.object({
   fullName: Joi.string().required(),
-  email: Joi.string().email(),
+  email: Joi.string().email().allow(""),
   pays: Joi.string().required(),
   numTelephone: Joi.number(),
-  note: Joi.string(),
+  note: Joi.string().allow(""),
 });
 
 const createAbonnSchema = Joi.object({
