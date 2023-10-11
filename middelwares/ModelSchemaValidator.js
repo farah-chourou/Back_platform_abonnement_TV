@@ -4,7 +4,7 @@ const createModelSchema = Joi.object({
   fullName: Joi.string().required(),
   email: Joi.string().allow(""),
   pays: Joi.string().required(),
-  numTelephone: Joi.number(),
+  numTelephone: Joi.number().allow(""),
   note: Joi.string().allow(""),
 });
 
@@ -12,7 +12,7 @@ const editModelSchema = Joi.object({
   fullName: Joi.string().required(),
   email: Joi.string().allow(""),
   pays: Joi.string().required(),
-  numTelephone: Joi.number(),
+  numTelephone: Joi.string(),
   note: Joi.string().allow(""),
 });
 
